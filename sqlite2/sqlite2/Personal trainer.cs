@@ -14,86 +14,80 @@ namespace sqlite2
 {
     public partial class Personal_trainer : Form
     {
-        public SQLiteConnection connection;
-        public Personal_trainer(string username)
+        public SQLiteConnection connection;                                       //initialise database connections
+        public Personal_trainer(string username)                                  //store username value                          
         {
             InitializeComponent();
-            label1.Text ="Hello "+ username;
-            label3.Text = username;
-            Fillcombo();
-            loadTable();
-            combobox2();
+            label1.Text ="Hello "+ username;                                     //display user label 
+            label3.Text = username;                                                  
+            Fillcombo();                                                         //load fillcombo method
+            loadTable();                                                         //load datatable
+            combobox2();                                                         //load combobox method
         }
-        DataTable DB;
+
+        DataTable DB;                                                           //create new datatable
        
         void Fillcombo()
         {
-            connection = new SQLiteConnection("Data Source= database.appointments");
-            connection.Open();
-            if (!File.Exists("./database.appointments"))
+            connection = new SQLiteConnection("Data Source= database.appointments");          //create new connection to database
+            connection.Open();                                                                //open database connection
+            if (!File.Exists("./database.appointments"))                                      //if database file doesn not exist
             {
-                SQLiteConnection.CreateFile("database.sqlite3");
-                MessageBox.Show("DB created");
+                SQLiteConnection.CreateFile("database.sqlite3");                               //create new database
+                MessageBox.Show("DB created");                                                 //display messagebox
             }
-            SQLiteCommand cmd = new SQLiteCommand("select * from booker", connection);
-            SQLiteDataReader myReader;
+            SQLiteCommand cmd = new SQLiteCommand("select * from booker", connection);                //select table from databse 
+            SQLiteDataReader myReader;                                                                //create database stream
             try
             {
-                //int i = 0;
-                myReader = cmd.ExecuteReader();
-                while (myReader.Read())
+                myReader = cmd.ExecuteReader();                  //execute database stream reader                  
+                while (myReader.Read())                             
                 {
-                    string pName = myReader.GetString(1);
-                    string sName = myReader.GetString(3);
-                    //i++;
+                    string pName = myReader.GetString(1);          //add name to database
+                    string sName = myReader.GetString(3);          //add name to database
+
                     if (pName == label3.Text)
                     {
-                            comboBox1.Items.Add(sName);
+                            comboBox1.Items.Add(sName);               //add name to combobox
                         
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)                           
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);                       //display message if error is encountered
             }
         }
+
+
+
         void loadTable()
         {
-            connection = new SQLiteConnection("Data Source= database.appointments");
-            connection.Open();
-            if (!File.Exists("./database.appointments"))
+            connection = new SQLiteConnection("Data Source= database.appointments");         //create new connection to database     
+            connection.Open();                                                                //open database connection
+            if (!File.Exists("./database.appointments"))                                      //if database file doesn not exist
             {
-                SQLiteConnection.CreateFile("database.sqlite3");
-                MessageBox.Show("DB created");
+                SQLiteConnection.CreateFile("database.sqlite3");                               //create new database
+                MessageBox.Show("DB created");                                                 //display messagebox                                       
             }
-            string query = "select * from booker";
-            SQLiteDataAdapter sqldat = new SQLiteDataAdapter(query, connection);
-            DB = new DataTable();
-            sqldat.Fill(DB);
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = DB;
-            DataView DV = new DataView(DB);
-            DV.RowFilter = string.Format("pt LIKE '%{0}%'", label3.Text);
-            dataGridView1.DataSource = DV;
+
+            string query = "select * from booker";                                                //select table from databse 
+            SQLiteDataAdapter sqldat = new SQLiteDataAdapter(query, connection);                  //create data adapter
+            DB = new DataTable();                                                                 //create new table
+            sqldat.Fill(DB);                                                                      //fill table
+            dataGridView1.AutoGenerateColumns = false;                                            //disable auto generations of columns
+            dataGridView1.DataSource = DB;                                                        //obtain datasource from the datatable
+            DataView DV = new DataView(DB);                                                       
+            DV.RowFilter = string.Format("pt LIKE '%{0}%'", label3.Text);                        //filter row data to only show data which has the users username
+            dataGridView1.DataSource = DV;                                                       //display data
         }
-        private void button1_Click(object sender, EventArgs e)
+
+
+
+        private void button1_Click(object sender, EventArgs e)                                   //reload appointments button
         {
-            /*
-            connection = new SQLiteConnection("Data Source= database.appointments");
-            connection.Open();
-            if (!File.Exists("./database.appointments"))
-            {
-                SQLiteConnection.CreateFile("database.sqlite3");
-                MessageBox.Show("DB created");
-            }
-            string query = "select * from booker";
-            SQLiteDataAdapter sqldat = new SQLiteDataAdapter(query, connection);
-            DataTable DB = new DataTable();
-            sqldat.Fill(DB);
-            dataGridView1.DataSource = DB;
-            */
-            connection = new SQLiteConnection("Data Source= database.appointments");
+           
+            connection = new SQLiteConnection("Data Source= database.appointments");        
             connection.Open();
             if (!File.Exists("./database.appointments"))
             {
