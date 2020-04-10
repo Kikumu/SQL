@@ -1,6 +1,10 @@
-# SQL
-Sports portable DBMS(sqlite)
-download repository. 
-go to the "sqlit2" folder, click on "bin" then click on "debug"
-scroll down to find the executable folder "sqlite2"
-run the program
+# SQL Sports Management System
+## Requirements
+Visual Studio Community 2017 onwards
+
+# How to Launch
+1) Download Repository and extract files.
+2) Navigate to solution by going to SQL_master->sqlite2->sqlite2.sln
+3) Launch "sqlite2.sln" using visual studio
+4) After Launching the program, click "start" on the IDE
+
