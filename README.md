@@ -1,4 +1,6 @@
 # SQL Sports Management System
+A simple SQL based sports management interface using windows forms
+
 ## Requirements
 Visual Studio Community 2017 onwards
 
